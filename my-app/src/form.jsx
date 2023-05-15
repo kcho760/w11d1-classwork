@@ -6,7 +6,7 @@ function Form() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phonenumber, setPhoneNumber] = useState("");
-    const [staff, setStaff] = useState("")
+    const [staff, setStaff] = useState("Student")
     const [phonetype, setPhoneType] = useState("");
     const [signup, setSignup] = useState(false)
     const [bio,setBio] = useState("");
@@ -29,8 +29,15 @@ function Form() {
                 case "bio":
                     setBio(e.target.value);
                 break;
-            default:
+                case "staff":
+                    setStaff(e.target.value);
                 break;
+                case "signup":
+                    setSignup(e.target.checked);
+                break;
+
+                default:
+                    break;
             }
         }
     }
@@ -66,7 +73,6 @@ function Form() {
         e.preventDefault();
 
         let errors = validate();
-        debugger
 
         if (errors.length > 0) {
             setErrorMessages(errors);
@@ -75,9 +81,11 @@ function Form() {
                 name,
                 email,
                 phonenumber,
+                staff,
                 phonetype,
                 signup,
-                bio
+                bio,
+                signup
             };
             console.log(form)
         }
@@ -113,14 +121,14 @@ function Form() {
             </select>
                 <br />
             <label>Instructor</label>
-            <input type="radio" name="staff" value="Instructor" onChange={setStaff}></input>
+            <input type="radio" name="staff" value="Instructor" checked={staff === "Instructor"} onChange={handleChange('staff')}></input>
             <label>Student</label>
-            <input type="radio" name="staff" value="Student" onChange={setStaff}></input>
+            <input type="radio" name="staff" value="Student" checked={staff ==="Student"} onChange={handleChange('staff')}></input>
                 <br />
             <input className='bio' type="textarea" placeholder="Bio" value={bio} onChange={handleChange('bio')}/>
                 <br />
             <label>Sign up!</label>
-            <input type="checkbox" value={signup} onChange={setSignup}/>
+            <input type="checkbox" checked={signup} onChange={handleChange('signup')}/>
                 <br />
             <button>Submit!</button>
         </form>
